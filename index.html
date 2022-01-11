@@ -23,15 +23,23 @@
       <!-- container for entire main -->
       <div class="row">
         <!-- container for search and search history -->
-        <div class="col-12 col-md-4">
-          <!-- search form -->
-          <h2>Search for a City:</h2>
-          <form action="submit">
-            <input type="text" value="Enter a City Name" />
-            <button type="submit">Search</button>
-          </form>
-          <!-- hardcoded container for dynamic search history -->
-          <div id="search-history"></div>
+        <div id="search-and-history" class="col-12 col-md-4">
+          <div id="form-container">
+            <!-- search form -->
+            <h2>Search for a City:</h2>
+            <form action="submit">
+              <input
+                type="text"
+                value="Enter a City Name"
+                class="form-control-lg"
+              />
+              <button type="submit" id="search-button" class="btn btn-primary">
+                Search
+              </button>
+            </form>
+            <!-- hardcoded container for dynamic search history -->
+            <div id="search-history"></div>
+          </div>
         </div>
         <!-- container for the currently searched city's forecast -->
         <div class="row col-12 col-md-8">

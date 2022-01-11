@@ -17,3 +17,26 @@ h1 {
   font-weight: bolder;
   padding: 20px 0;
 }
+
+h2 {
+  font-weight: bolder;
+  margin: 10px 0;
+}
+
+#form-container {
+  width: 95%;
+  margin: 0 auto;
+}
+
+form {
+  border-bottom: 3px solid black;
+}
+
+.form-control-lg {
+  width: 100%;
+}
+
+#search-button {
+  width: 100%;
+  margin: 20px 0;
+}
