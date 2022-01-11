@@ -14,9 +14,35 @@
     <title>The Weather of Today</title>
   </head>
   <body>
-    <header></header>
-    <main></main>
-    <footer></footer>
+    <!-- header section -->
+    <header>
+      <h1>Weather Dashboard</h1>
+    </header>
+    <!-- main section -->
+    <main>
+      <!-- container for entire main -->
+      <div class="row">
+        <!-- container for search and search history -->
+        <div class="col-12 col-md-4">
+          <!-- search form -->
+          <h2>Search for a City:</h2>
+          <form action="submit">
+            <input type="text" value="Enter a City Name" />
+            <button type="submit">Search</button>
+          </form>
+          <!-- hardcoded container for dynamic search history -->
+          <div id="search-history"></div>
+        </div>
+        <!-- container for the currently searched city's forecast -->
+        <div class="row col-12 col-md-8">
+          <!-- container for the daily forecast -->
+          <div class="col-12"></div>
+          <!-- header and container for the 5-day forecast -->
+          <h3>5-Day Forcast:</h3>
+          <div class="col-12"></div>
+        </div>
+      </div>
+    </main>
   </body>
   <script src="./assets/js/script.js"></script>
   <script

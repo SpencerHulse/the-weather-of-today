@@ -1,1 +1,19 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
 
+h1 {
+  text-align: center;
+  background: rgb(54, 93, 213);
+  background: linear-gradient(
+    90deg,
+    rgba(54, 93, 213, 1) 0%,
+    rgba(26, 48, 162, 1) 100%
+  );
+  color: white;
+  font-weight: bolder;
+  padding: 20px 0;
+}
