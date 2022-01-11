@@ -29,7 +29,7 @@ h2 {
 }
 
 form {
-  border-bottom: 3px solid black;
+  border-bottom: 2px solid black;
 }
 
 .form-control-lg {
@@ -39,4 +39,18 @@ form {
 #search-button {
   width: 100%;
   margin: 20px 0;
+}
+
+#current-weather {
+  border: 2px solid black;
+}
+
+img {
+  height: 55px;
+}
+
+.forecast-day {
+  width: 18%;
+  margin: 10px;
+  border: 1px solid black;
 }

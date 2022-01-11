@@ -23,7 +23,7 @@
       <!-- container for entire main -->
       <div class="row">
         <!-- container for search and search history -->
-        <div id="search-and-history" class="col-12 col-md-4">
+        <div id="search-and-history" class="col-12 col-md-3">
           <div id="form-container">
             <!-- search form -->
             <h2>Search for a City:</h2>
@@ -43,12 +43,14 @@
           </div>
         </div>
         <!-- container for the currently searched city's forecast -->
-        <div class="row col-12 col-md-8">
-          <!-- container for the daily forecast -->
-          <div class="col-12"></div>
+        <div class="row col-12 col-md-9">
+          <!-- container for the current weather -->
+          <div class="col-12" id="current-weather">
+            <div class="d-flex" id="current-weather-container"></div>
+          </div>
           <!-- header and container for the 5-day forecast -->
           <h3>5-Day Forcast:</h3>
-          <div class="col-12"></div>
+          <div class="col-12 d-flex" id="forecast-container"></div>
         </div>
       </div>
     </main>
