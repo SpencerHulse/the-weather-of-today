@@ -36,9 +36,16 @@ form {
   width: 100%;
 }
 
-#search-button {
+.btn {
   width: 100%;
+}
+
+.btn-primary {
   margin: 20px 0;
+}
+
+.btn-secondary {
+  margin-top: 20px;
 }
 
 #current-weather {

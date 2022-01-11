@@ -5,11 +5,13 @@ let searchedCities = [];
 let oneCallApiKey = "c271cbbc5f9e0287d1957ce5750e8ccf";
 
 //variables
-let currentCity = "Chattanooga";
+let currentCity = "";
 let date = luxon.DateTime.local();
 //form
 let formInputEl = $("#city-input");
 let searchBtnEl = $("#search-button");
+//search history
+let searchHistoryEl = $("#search-history");
 //current weather
 let currentWeatherEl = $("#current-weather");
 let currentWeatherContainerEl = $("#current-weather-container");
@@ -36,6 +38,21 @@ let citySearchHandler = (event) => {
 let searchHistoryHandler = (city) => {
   searchedCities.unshift(city);
   searchedCities = searchedCities.slice(0, 8);
+  saveSearchHistory();
+  createSearchHistory();
+};
+
+//creates search history
+//seperated from handler to load in without adding the last city to the list again
+let createSearchHistory = () => {
+  searchHistoryEl.empty();
+
+  for (let i = 0; i < searchedCities.length; i++) {
+    let cityButton = $(
+      "<button class='btn btn-secondary'>" + searchedCities[i] + "</button>"
+    );
+    searchHistoryEl.append(cityButton);
+  }
 };
 
 let fetchCityGeolocation = (city) => {
@@ -80,9 +97,13 @@ let fetchCityWeather = (cityLat, cityLon) => {
 };
 
 let createWeatherPanel = (cityData) => {
+  currentWeatherEl.empty();
   //get the date and convert it to month/day/year format
   let currentDate = date.month + "/" + date.day + "/" + date.year;
   //create current weather dashboard
+  let currentWeatherContainerEl = $(
+    "<div class='d-flex' id='current-weather-container'></div>"
+  );
   currentWeatherContainerEl.append(
     "<h2>" + currentCity + " (" + date.toLocaleString() + ")" + "</h2>"
   );
@@ -91,13 +112,14 @@ let createWeatherPanel = (cityData) => {
       cityData.current.weather[0].icon +
       "@2x.png' />"
   );
+  currentWeatherEl.append(currentWeatherContainerEl);
   currentWeatherEl.append("<p>Temp: " + cityData.current.temp + "&#176;F");
   currentWeatherEl.append("<p>Wind: " + cityData.current.wind_speed + " MPH");
   currentWeatherEl.append("<p>Humidity: " + cityData.current.humidity + " %");
   currentWeatherEl.append("<p>UV Index: " + cityData.current.uvi);
-  console.log(cityData);
 
   //five day forecast
+  forecastContainerEl.empty();
   for (let i = 1; i <= 5; i++) {
     let dayContainerEl = $("<div class='forecast-day'></div>");
     dayContainerEl.append("<h4>" + date.plus({ day: i }).toLocaleString()) +
@@ -123,6 +145,17 @@ let createWeatherPanel = (cityData) => {
   }
 };
 
+let saveSearchHistory = () => {
+  localStorage.setItem("history", JSON.stringify(searchedCities));
+};
+
+let loadSearchHistory = () => {
+  searchedCities = JSON.parse(localStorage.getItem("history"));
+  currentCity = searchedCities[0];
+  fetchCityGeolocation(currentCity);
+  createSearchHistory();
+};
+
 //event handlers
 searchBtnEl.on("click", citySearchHandler);
-fetchCityGeolocation("Chattanooga");
+loadSearchHistory();
