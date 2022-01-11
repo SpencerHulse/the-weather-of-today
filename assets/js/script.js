@@ -6,6 +6,7 @@ let oneCallApiKey = "c271cbbc5f9e0287d1957ce5750e8ccf";
 
 //variables
 let currentCity = "Chattanooga";
+let date = luxon.DateTime.local();
 //form
 let formInputEl = $("#city-input");
 let searchBtnEl = $("#search-button");
@@ -80,14 +81,15 @@ let fetchCityWeather = (cityLat, cityLon) => {
 
 let createWeatherPanel = (cityData) => {
   //get the date and convert it to month/day/year format
-  let date = new Date();
-  date = date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
+  let currentDate = date.month + "/" + date.day + "/" + date.year;
   //create current weather dashboard
   currentWeatherContainerEl.append(
-    "<h2>" + currentCity + " (" + date + ")" + "</h2>"
+    "<h2>" + currentCity + " (" + date.toLocaleString() + ")" + "</h2>"
   );
   currentWeatherContainerEl.append(
-    "<img src='http://openweathermap.org/img/wn/10d@2x.png' />"
+    "<img src='http://openweathermap.org/img/wn/" +
+      cityData.current.weather[0].icon +
+      "@2x.png' />"
   );
   currentWeatherEl.append("<p>Temp: " + cityData.current.temp + "&#176;F");
   currentWeatherEl.append("<p>Wind: " + cityData.current.wind_speed + " MPH");
@@ -96,8 +98,15 @@ let createWeatherPanel = (cityData) => {
   console.log(cityData);
 
   //five day forecast
-  for (let i = 0; i < 5; i++) {
+  for (let i = 1; i <= 5; i++) {
     let dayContainerEl = $("<div class='forecast-day'></div>");
+    dayContainerEl.append("<h4>" + date.plus({ day: i }).toLocaleString()) +
+      "</h4>";
+    dayContainerEl.append(
+      "<img src='http://openweathermap.org/img/wn/" +
+        cityData.daily[i].weather[0].icon +
+        "@2x.png' />"
+    );
     dayContainerEl.append(
       "<p>Max Temp: " + cityData.daily[i].temp.max + "&#176;F</p>"
     );
