@@ -65,7 +65,7 @@ let createSearchHistory = () => {
 
 let fetchCityGeolocation = (city) => {
   let geolocationApi =
-    "http://api.openweathermap.org/geo/1.0/direct?q=" +
+    "https://api.openweathermap.org/geo/1.0/direct?q=" +
     city +
     "&appid=" +
     oneCallApiKey;
@@ -124,7 +124,7 @@ let createWeatherPanel = (cityData) => {
   containerEl.append("<h2>" + currentCity + currentDate + "</h2>");
   //appends an image that matches the current weather to the container
   containerEl.append(
-    "<img src='http://openweathermap.org/img/wn/" + currentIcon + "@2x.png' />"
+    "<img src='https://openweathermap.org/img/wn/" + currentIcon + "@2x.png' />"
   );
   //appends the container to the current weather div
   currentWeatherEl.append(containerEl);
@@ -167,7 +167,7 @@ let createWeatherPanel = (cityData) => {
     //appending all of the data to each forecast day
     dayContainerEl.append("<h4>" + forecastDate + "</h4>");
     dayContainerEl.append(
-      "<img src='http://openweathermap.org/img/wn/" +
+      "<img src='https://openweathermap.org/img/wn/" +
         forecastIcon +
         "@2x.png' />"
     );
