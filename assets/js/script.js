@@ -132,6 +132,7 @@ let createWeatherPanel = (cityData) => {
   currentWeatherEl.append("<p>Temp: " + currentTemp);
   currentWeatherEl.append("<p>Wind: " + currentWindSpeed);
   currentWeatherEl.append("<p>Humidity: " + currentHumidity);
+
   //assigns the class based on the uv index
   let indexSeverity = "";
   if (currentUvi <= 2.5) {
@@ -141,6 +142,7 @@ let createWeatherPanel = (cityData) => {
   } else {
     indexSeverity = "bg-danger";
   }
+  //appends the uvi with the appropriate bg to the weather div
   currentWeatherEl.append(
     "<p>UV Index: " +
       `<span class="uvi badge ${indexSeverity}">` +
@@ -149,37 +151,45 @@ let createWeatherPanel = (cityData) => {
   );
 
   //five day forecast
+  //empties the element
   forecastContainerEl.empty();
+  //for loop to add the next five days
   for (let i = 1; i <= 5; i++) {
+    //creates the container
     let dayContainerEl = $("<div class='forecast-day'></div>");
-    dayContainerEl.append("<h4>" + date.plus({ day: i }).toLocaleString()) +
-      "</h4>";
+    let forecastDate = date.plus({ day: i }).toLocaleString();
+    let forecastIcon = cityData.daily[i].weather[0].icon;
+    let forecastMaxTemp = cityData.daily[i].temp.max;
+    let forecastMinTemp = cityData.daily[i].temp.min;
+    let forecastWindSpeed = cityData.daily[i].wind_speed;
+    let forecastHumidity = cityData.daily[i].humidity;
+
+    //appending all of the data to each forecast day
+    dayContainerEl.append("<h4>" + forecastDate + "</h4>");
     dayContainerEl.append(
       "<img src='http://openweathermap.org/img/wn/" +
-        cityData.daily[i].weather[0].icon +
+        forecastIcon +
         "@2x.png' />"
     );
-    dayContainerEl.append(
-      "<p>Max Temp: " + cityData.daily[i].temp.max + "&#176;F</p>"
-    );
-    dayContainerEl.append(
-      "<p>Min Temp: " + cityData.daily[i].temp.min + "&#176;F</p>"
-    );
-    dayContainerEl.append(
-      "<p>Wind: " + cityData.daily[i].wind_speed + " MPH</p>"
-    );
-    dayContainerEl.append(
-      "<p>Humidity: " + cityData.daily[i].humidity + " %</p>"
-    );
+    dayContainerEl.append("<p>Max Temp: " + forecastMaxTemp + "&#176;F</p>");
+    dayContainerEl.append("<p>Min Temp: " + forecastMinTemp + "&#176;F</p>");
+    dayContainerEl.append("<p>Wind: " + forecastWindSpeed + " MPH</p>");
+    dayContainerEl.append("<p>Humidity: " + forecastHumidity + " %</p>");
+
+    //appending each day to the 5-day container
     forecastContainerEl.append(dayContainerEl);
   }
 };
 
+//saves the search history to local storage
 let saveSearchHistory = () => {
+  //turns the array into a string
   localStorage.setItem("history", JSON.stringify(searchedCities));
 };
 
+//loads the search history from local storage
 let loadSearchHistory = () => {
+  //returns the data from its stringified version
   searchedCities = JSON.parse(localStorage.getItem("history"));
 
   //if there is nothing in localstorage, it stops here
