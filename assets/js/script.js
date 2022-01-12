@@ -25,8 +25,8 @@ let citySearchHandler = (event) => {
   //get typed-in city
   let city = formInputEl.val();
 
-  //assigning the city to a temp string
-  let tempStr = city.slice();
+  //assigning the lowercase city to a temp string
+  let tempStr = city.toLowerCase().slice();
   //creating an array with each word typed
   const tempArr = tempStr.split(" ");
   //loop to capitalize the first letter of each word
@@ -47,10 +47,15 @@ let citySearchHandler = (event) => {
   fetchCityGeolocation(city);
 };
 
+//handles searching by clicking a city in the history
 let historicSearch = (event) => {
+  //gets what is being clicked
   let target = $(event.target);
+  //ensures the target is a button
   if (target.is("button")) {
+    //gets the inner text (city name)
     currentCity = target[0].innerText;
+    //adds to the search history and sends to the geolocator
     searchHistoryHandler(currentCity);
     fetchCityGeolocation(currentCity);
   }
@@ -58,8 +63,11 @@ let historicSearch = (event) => {
 
 //keeps an array of the past 8 searches
 let searchHistoryHandler = (city) => {
+  //adds the city to the start of the array
   searchedCities.unshift(city);
+  //slices newest 8 searches
   searchedCities = searchedCities.slice(0, 8);
+  //saves to local and updates search history
   saveSearchHistory();
   createSearchHistory();
 };
@@ -69,6 +77,7 @@ let searchHistoryHandler = (city) => {
 let createSearchHistory = () => {
   searchHistoryEl.empty();
 
+  //creates the search history as buttons
   for (let i = 0; i < searchedCities.length; i++) {
     let cityButton = $(
       "<button class='btn btn-secondary'>" + searchedCities[i] + "</button>"
@@ -77,22 +86,33 @@ let createSearchHistory = () => {
   }
 };
 
+//uses geolocation api to get the coordinates of typed in city
 let fetchCityGeolocation = (city) => {
+  //variable to hold api for fetch
   let geolocationApi =
     "https://api.openweathermap.org/geo/1.0/direct?q=" +
     city +
     "&appid=" +
     oneCallApiKey;
 
+  //fetches the data
   fetch(geolocationApi).then(function (response) {
+    //checks whether the fetch was successful
     if (response.ok) {
       response.json().then(function (data) {
+        //checks to ensure there is data returned
+        if (data.length === 0) {
+          alert("Error: City Not Found");
+          return;
+        }
+        //assigns the latitude and longitude
         let longitude = data[0].lon;
         let latitude = data[0].lat;
         fetchCityWeather(latitude, longitude);
       });
     } else {
-      alert("City not found");
+      alert("Error: Unable to Fetch Data");
+      return;
     }
   });
 };
@@ -100,6 +120,8 @@ let fetchCityGeolocation = (city) => {
 let fetchCityWeather = (cityLat, cityLon) => {
   let lat = cityLat;
   let lon = cityLon;
+
+  //plugs in lat and lon to the weather api
   let oneCallWeatherApi =
     "https://api.openweathermap.org/data/2.5/onecall?lat=" +
     lat +
@@ -109,15 +131,19 @@ let fetchCityWeather = (cityLat, cityLon) => {
     "&appid=" +
     oneCallApiKey;
 
+  //fetches the data with the weather api
   fetch(oneCallWeatherApi).then(function (response) {
     if (response.ok) {
       response.json().then(function (data) {
         createWeatherPanel(data);
       });
+    } else {
+      alert("Error: Unable to Fetch Data");
     }
   });
 };
 
+//handles dynamic creation of weather dashboard
 let createWeatherPanel = (cityData) => {
   //clear the current weather element
   currentWeatherEl.empty();
