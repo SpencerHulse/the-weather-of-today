@@ -21,12 +21,26 @@ let forecastContainerEl = $("#forecast-container");
 let citySearchHandler = (event) => {
   //prevent page from reloading
   event.preventDefault();
+
   //get typed-in city
   let city = formInputEl.val();
+
+  //assigning the city to a temp string
+  let tempStr = city.slice();
+  //creating an array with each word typed
+  const tempArr = tempStr.split(" ");
+  //loop to capitalize the first letter of each word
+  for (let i = 0; i < tempArr.length; i++) {
+    tempArr[i] = tempArr[i].charAt(0).toUpperCase() + tempArr[i].slice(1);
+  }
+  //returning the words in the array to a single string
+  city = tempArr.join(" ");
+
   //sets current city for dashboard
   currentCity = city;
   //reset form
   formInputEl.val("");
+
   //updates the search history
   searchHistoryHandler(city);
   //send a request for city geolocation data
