@@ -53,6 +53,15 @@ form {
   height: 222px;
 }
 
+.uvi {
+  padding: 5px 15px;
+  color: white;
+}
+
+.bg-warning {
+  color: black;
+}
+
 img {
   height: 55px;
 }

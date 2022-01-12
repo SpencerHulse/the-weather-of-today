@@ -105,26 +105,48 @@ let fetchCityWeather = (cityLat, cityLon) => {
 };
 
 let createWeatherPanel = (cityData) => {
+  //clear the current weather element
   currentWeatherEl.empty();
-  //get the date and convert it to month/day/year format
-  let currentDate = date.month + "/" + date.day + "/" + date.year;
-  //create current weather dashboard
-  let currentWeatherContainerEl = $(
+
+  //data for the current weather element
+  let currentDate = " (" + date.toLocaleString() + ")";
+  let currentIcon = cityData.current.weather[0].icon;
+  let currentTemp = cityData.current.temp + "&#176;F";
+  let currentWindSpeed = cityData.current.wind_speed + " MPH";
+  let currentHumidity = cityData.current.humidity + " %";
+  let currentUvi = cityData.current.uvi;
+  //creates the container to allow header and image to be side-by-side
+  let containerEl = $(
     "<div class='d-flex' id='current-weather-container'></div>"
   );
-  currentWeatherContainerEl.append(
-    "<h2>" + currentCity + " (" + date.toLocaleString() + ")" + "</h2>"
+
+  //appends the h2 containing city and date to the container
+  containerEl.append("<h2>" + currentCity + currentDate + "</h2>");
+  //appends an image that matches the current weather to the container
+  containerEl.append(
+    "<img src='http://openweathermap.org/img/wn/" + currentIcon + "@2x.png' />"
   );
-  currentWeatherContainerEl.append(
-    "<img src='http://openweathermap.org/img/wn/" +
-      cityData.current.weather[0].icon +
-      "@2x.png' />"
+  //appends the container to the current weather div
+  currentWeatherEl.append(containerEl);
+  //appends the current weather data to the weather div
+  currentWeatherEl.append("<p>Temp: " + currentTemp);
+  currentWeatherEl.append("<p>Wind: " + currentWindSpeed);
+  currentWeatherEl.append("<p>Humidity: " + currentHumidity);
+  //assigns the class based on the uv index
+  let indexSeverity = "";
+  if (currentUvi <= 2.5) {
+    indexSeverity = "bg-success";
+  } else if (currentUvi <= 5.5) {
+    indexSeverity = "bg-warning";
+  } else {
+    indexSeverity = "bg-danger";
+  }
+  currentWeatherEl.append(
+    "<p>UV Index: " +
+      `<span class="uvi badge ${indexSeverity}">` +
+      currentUvi +
+      "</span>"
   );
-  currentWeatherEl.append(currentWeatherContainerEl);
-  currentWeatherEl.append("<p>Temp: " + cityData.current.temp + "&#176;F");
-  currentWeatherEl.append("<p>Wind: " + cityData.current.wind_speed + " MPH");
-  currentWeatherEl.append("<p>Humidity: " + cityData.current.humidity + " %");
-  currentWeatherEl.append("<p>UV Index: " + cityData.current.uvi);
 
   //five day forecast
   forecastContainerEl.empty();
