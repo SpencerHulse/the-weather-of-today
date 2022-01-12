@@ -5,13 +5,17 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.row {
+  margin: 0;
+}
+
 h1 {
   text-align: center;
   background: rgb(54, 93, 213);
   background: linear-gradient(
     90deg,
-    rgba(54, 93, 213, 1) 0%,
-    rgba(26, 48, 162, 1) 100%
+    rgba(58, 107, 192, 255) 0%,
+    rgba(35, 6, 86, 255) 100%
   );
   color: white;
   font-weight: bolder;
@@ -23,13 +27,14 @@ h2 {
   margin: 10px 0;
 }
 
-#form-container {
-  width: 95%;
-  margin: 0 auto;
+h3 {
+  font-weight: bolder;
+  margin-top: 20px;
 }
 
-form {
-  border-bottom: 2px solid black;
+#form-container {
+  width: 97.5%;
+  margin: 0 auto;
 }
 
 .form-control-lg {
@@ -42,15 +47,30 @@ form {
 
 .btn-primary {
   margin: 20px 0;
+  background-color: rgba(90, 162, 233, 255);
 }
 
 .btn-secondary {
   margin-top: 20px;
+  background-color: rgba(183, 183, 183, 255);
+  color: black;
+}
+
+#search-history {
+  border-top: 2px solid black;
+}
+
+#weather-container {
+  margin: 10px 10px;
+}
+
+#intro-message {
+  font-size: 26px;
+  margin: auto;
 }
 
 #current-weather {
-  border: 2px solid black;
-  height: 222px;
+  border: 1px solid black;
 }
 
 .uvi {
@@ -67,7 +87,8 @@ img {
 }
 
 .forecast-day {
-  width: 18%;
-  margin: 10px;
   border: 1px solid black;
+  padding: 5px 0 0 5px;
+  background-color: rgba(51, 71, 90, 255);
+  color: white;
 }

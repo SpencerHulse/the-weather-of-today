@@ -129,23 +129,24 @@ let createWeatherPanel = (cityData) => {
   let currentWindSpeed = cityData.current.wind_speed + " MPH";
   let currentHumidity = cityData.current.humidity + " %";
   let currentUvi = cityData.current.uvi;
-  //creates the container to allow header and image to be side-by-side
-  let containerEl = $(
-    "<div class='d-flex' id='current-weather-container'></div>"
-  );
-
-  //appends the h2 containing city and date to the container
-  containerEl.append("<h2>" + currentCity + currentDate + "</h2>");
-  //appends an image that matches the current weather to the container
+  //selects the container to appent to
+  let containerEl = $("#current-weather");
+  //appends the h2 containing city, date, and image
   containerEl.append(
-    "<img src='https://openweathermap.org/img/wn/" + currentIcon + "@2x.png' />"
+    "<h2 class='col-12'>" +
+      currentCity +
+      currentDate +
+      "<img src='https://openweathermap.org/img/wn/" +
+      currentIcon +
+      "@2x.png' />" +
+      "</h2>"
   );
   //appends the container to the current weather div
-  currentWeatherEl.append(containerEl);
+  containerEl.append(containerEl);
   //appends the current weather data to the weather div
-  currentWeatherEl.append("<p>Temp: " + currentTemp);
-  currentWeatherEl.append("<p>Wind: " + currentWindSpeed);
-  currentWeatherEl.append("<p>Humidity: " + currentHumidity);
+  containerEl.append("<p class='col-12'>Temp: " + currentTemp + "</p>");
+  containerEl.append("<p class='col-12'>Wind: " + currentWindSpeed + "</p>");
+  containerEl.append("<p class='col-12'>Humidity: " + currentHumidity + "</p>");
 
   //assigns the class based on the uv index
   let indexSeverity = "";
@@ -157,8 +158,8 @@ let createWeatherPanel = (cityData) => {
     indexSeverity = "bg-danger";
   }
   //appends the uvi with the appropriate bg to the weather div
-  currentWeatherEl.append(
-    "<p>UV Index: " +
+  containerEl.append(
+    "<p class='col-12'>UV Index: " +
       `<span class="uvi badge ${indexSeverity}">` +
       currentUvi +
       "</span>"
@@ -170,25 +171,54 @@ let createWeatherPanel = (cityData) => {
   //for loop to add the next five days
   for (let i = 1; i <= 5; i++) {
     //creates the container
-    let dayContainerEl = $("<div class='forecast-day'></div>");
+    let dayContainerEl = $(
+      "<div class='row col-12 col-lg mb-2 mr-2 forecast-day'></div>"
+    );
+
+    //does not include right margin on the final column
+    if (i === 5) {
+      dayContainerEl = $(
+        "<div class='row col-12 col-lg mb-2 forecast-day'></div>"
+      );
+    }
+
+    //variables with data from fetched object and date calculations
     let forecastDate = date.plus({ day: i }).toLocaleString();
     let forecastIcon = cityData.daily[i].weather[0].icon;
     let forecastMaxTemp = cityData.daily[i].temp.max;
     let forecastMinTemp = cityData.daily[i].temp.min;
     let forecastWindSpeed = cityData.daily[i].wind_speed;
     let forecastHumidity = cityData.daily[i].humidity;
+    //variable for classes for paragraphs
+    let paragraphClasses = "col-5 col-md-3 col-lg-12 p-1";
 
     //appending all of the data to each forecast day
-    dayContainerEl.append("<h4>" + forecastDate + "</h4>");
+    //h4 containting the date
+    dayContainerEl.append("<h4 class='col-12 p-1'>" + forecastDate + "</h4>");
+    //div to hold image element
     dayContainerEl.append(
-      "<img src='https://openweathermap.org/img/wn/" +
+      "<div class='col-12 p-1'>" +
+        "<img src='https://openweathermap.org/img/wn/" +
         forecastIcon +
-        "@2x.png' />"
+        "@2x.png' />" +
+        "</div>"
     );
-    dayContainerEl.append("<p>Max Temp: " + forecastMaxTemp + "&#176;F</p>");
-    dayContainerEl.append("<p>Min Temp: " + forecastMinTemp + "&#176;F</p>");
-    dayContainerEl.append("<p>Wind: " + forecastWindSpeed + " MPH</p>");
-    dayContainerEl.append("<p>Humidity: " + forecastHumidity + " %</p>");
+    //max temp
+    dayContainerEl.append(
+      `<p class='${paragraphClasses}'>High: ` + forecastMaxTemp + "&#176;F</p>"
+    );
+    //min temp
+    dayContainerEl.append(
+      `<p class='${paragraphClasses}'>Low: ` + forecastMinTemp + "&#176;F</p>"
+    );
+    //wind speed
+    dayContainerEl.append(
+      `<p class='${paragraphClasses}'>Wind: ` + forecastWindSpeed + " MPH</p>"
+    );
+    //humidity
+    dayContainerEl.append(
+      `<p class='${paragraphClasses}'>Humidity: ` + forecastHumidity + "%</p>"
+    );
 
     //appending each day to the 5-day container
     forecastContainerEl.append(dayContainerEl);
