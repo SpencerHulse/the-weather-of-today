@@ -14,7 +14,6 @@ let searchBtnEl = $("#search-button");
 let searchHistoryEl = $("#search-history");
 //current weather
 let currentWeatherEl = $("#current-weather");
-let currentWeatherContainerEl = $("#current-weather-container");
 //forecast
 let forecastContainerEl = $("#forecast-container");
 
@@ -32,6 +31,15 @@ let citySearchHandler = (event) => {
   searchHistoryHandler(city);
   //send a request for city geolocation data
   fetchCityGeolocation(city);
+};
+
+let historicSearch = (event) => {
+  let target = $(event.target);
+  if (target.is("button")) {
+    currentCity = target[0].innerText;
+    searchHistoryHandler(currentCity);
+    fetchCityGeolocation(currentCity);
+  }
 };
 
 //keeps an array of the past 8 searches
@@ -158,4 +166,5 @@ let loadSearchHistory = () => {
 
 //event handlers
 searchBtnEl.on("click", citySearchHandler);
+searchHistoryEl.on("click", historicSearch);
 loadSearchHistory();
