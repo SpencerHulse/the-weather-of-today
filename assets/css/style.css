@@ -1,12 +1,26 @@
+/* reset the base */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
-
+/* resets margin on bootstrap rows */
 .row {
   margin: 0;
+}
+
+/* css variables */
+:root {
+  --weather-box-color: rgb(77, 104, 129);
+  --basic-border: 2px solid black;
+}
+
+/* header styles */
+h1,
+h2,
+h3 {
+  font-weight: bolder;
 }
 
 h1 {
@@ -14,63 +28,52 @@ h1 {
   background: rgb(54, 93, 213);
   background: linear-gradient(
     90deg,
-    rgba(58, 107, 192, 255) 0%,
-    rgba(35, 6, 86, 255) 100%
+    rgba(58, 107, 192) 0%,
+    rgb(35, 6, 86) 100%
   );
   color: white;
-  font-weight: bolder;
   padding: 20px 0;
 }
 
 h2 {
-  font-weight: bolder;
   margin: 10px 0;
 }
 
 h3 {
-  font-weight: bolder;
   margin-top: 20px;
 }
 
-#form-container {
-  width: 97.5%;
-  margin: 0 auto;
-}
+/* form styles */
 
-.form-control-lg {
-  width: 100%;
-}
-
+.form-control-lg,
 .btn {
   width: 100%;
 }
 
 .btn-primary {
   margin: 20px 0;
-  background-color: rgba(90, 162, 233, 255);
+  background-color: rgb(90, 162, 233);
 }
 
 .btn-secondary {
   margin-top: 20px;
-  background-color: rgba(183, 183, 183, 255);
+  background-color: rgb(183, 183, 183);
   color: black;
 }
 
 #search-history {
-  border-top: 2px solid black;
+  border-top: var(--basic-border);
 }
 
-#weather-container {
-  margin: 10px 10px;
-}
-
-#intro-message {
-  font-size: 26px;
-  margin: auto;
-}
-
+/* current weather dashboard styles */
 #current-weather {
-  border: 1px solid black;
+  border: var(--basic-border);
+}
+
+#current-weather h2 {
+  background-color: var(--weather-box-color);
+  color: white;
+  margin-top: 0;
 }
 
 .uvi {
@@ -89,6 +92,6 @@ img {
 .forecast-day {
   border: 1px solid black;
   padding: 5px 0 0 5px;
-  background-color: rgba(51, 71, 90, 255);
+  background-color: var(--weather-box-color);
   color: white;
 }
