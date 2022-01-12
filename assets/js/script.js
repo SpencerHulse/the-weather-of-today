@@ -159,6 +159,15 @@ let saveSearchHistory = () => {
 
 let loadSearchHistory = () => {
   searchedCities = JSON.parse(localStorage.getItem("history"));
+
+  //if there is nothing in localstorage, it stops here
+  if (!searchedCities) {
+    //starts with a clean array
+    searchedCities = [];
+    return;
+  }
+
+  //takes the previously searched city and displays it on the page
   currentCity = searchedCities[0];
   fetchCityGeolocation(currentCity);
   createSearchHistory();
@@ -167,4 +176,6 @@ let loadSearchHistory = () => {
 //event handlers
 searchBtnEl.on("click", citySearchHandler);
 searchHistoryEl.on("click", historicSearch);
+
+//initial load from local storage
 loadSearchHistory();
