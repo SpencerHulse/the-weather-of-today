@@ -56,7 +56,9 @@ let historicSearch = (event) => {
     //gets the inner text (city name)
     currentCity = target[0].innerText;
     //adds to the search history and sends to the geolocator
-    searchHistoryHandler(currentCity);
+    if (currentCity !== searchedCities[0]) {
+      searchHistoryHandler(currentCity);
+    }
     fetchCityGeolocation(currentCity);
   }
 };
